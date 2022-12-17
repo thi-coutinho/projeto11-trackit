@@ -1,0 +1,7 @@
+export const LIGHTGREY =    "#E5E5E5"
+export const LIGHTERGREY =  "#DBDBDB"
+export const DARKGREY =     "#666666"
+export const LIGHTBLUE =    "#52B6FF"
+export const DARKBLUE =     "#126BA5"
+export const LIGHTGREEN =   "#8FC549"
+export const MEDIUMGREY =   "#BABABA"
