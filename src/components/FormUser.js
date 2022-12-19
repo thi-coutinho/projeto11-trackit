@@ -53,21 +53,4 @@ const FormLogin = styled.form`
             color: ${LIGHTERGREY};
         }
     }
-    button {
-        margin:3px 36px 25px;
-        font-size: 21px;
-        line-height: 26px;
-        width:calc(100vw - 2 * 36px);
-        height: 45px;
-        color: white;
-        background: ${LIGHTBLUE};
-        border-radius: 5px;
-        border: ${LIGHTBLUE};
-        div {
-        height:100%;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        }
-    }
 `
