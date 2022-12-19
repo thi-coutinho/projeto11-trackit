@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 import { LIGHTBLUE } from "../constants/colors"
 
-export default function Navbar(){
+export default function NavBar(){
     return (
         <Menu>
             <Link to={"/habitos"}><div> Hábitos</div></Link>

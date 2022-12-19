@@ -25,13 +25,8 @@ export default function SignUpPage() {
             .catch(err => {
                 toggleLoading()
                 alert(err.response.data.message)
-                console.log(loading)
-                console.log(toggleLoading)
                
             })
-        // setBodySignupInfo({ email:"", password:"", name:"", image:"" })
-        
-
     }
 
     return (

@@ -1,8 +1,10 @@
 import styled from "styled-components"
 import { DARKBLUE } from "../constants/colors"
+import { useToken } from "../context/TokenProvider"
 
 export default function TopBar(){
-    const url = "https://yt3.ggpht.com/ytc/AMLnZu9tYPIG3bxki2LZz-NRrvHtLHRL0-wW95Cjgcr2=s900-c-k-c0x00ffffff-no-rj"
+    const tokenObj = useToken()
+    const url = tokenObj.imageURL
     return (
         <Top>
             <div> TrackIt</div>

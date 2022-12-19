@@ -1,4 +1,4 @@
-import Navbar from "./Navbar";
+import NavBar from "./NavBar";
 import TopBar from "./TopBar";
 import styled from "styled-components";
 
@@ -7,7 +7,7 @@ export default function BaseScreen(props){
         <Screen>
             <TopBar/>
             {props.children}
-            <Navbar/>
+            <NavBar/>
         </Screen>
 
     )
