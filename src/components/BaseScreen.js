@@ -19,4 +19,8 @@ const Screen = styled.div`
     min-height:100vh;
     padding:70px 0 100px;
     background-color: ${props => props.token? "#F2F2F2":"white" } ;
+    > div:has(svg) {
+        display:flex;
+        justify-content:center;
+    }
 `

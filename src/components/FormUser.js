@@ -4,7 +4,7 @@ import logo from "../constants/logo.svg"
 import { Link } from "react-router-dom"
 
 
-export default function FormUser({ route, linkText, submitFunction, children }) {
+export default function FormUser({ route, linkText, submitFunction, children, dataTest}) {
 
     return (
         <FlexRow>
@@ -15,7 +15,7 @@ export default function FormUser({ route, linkText, submitFunction, children }) 
             }}>
                 {children}
             </FormLogin>
-            <Link to={route}>{linkText}</Link>
+            <Link data-test={dataTest} to={route}>{linkText}</Link>
         </FlexRow>
     )
 

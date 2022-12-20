@@ -50,30 +50,33 @@ export default function MyHabitsPage() {
                 setWeekdays([])
                 setHabitText("")
             })
-            .catch(err => console.log(err.response.data.message))
+            .catch(err => alert(err.response.data.message))
 
     }
 
     function deleteHabit(id) {
-        // if (window.confirm("Você quer mesmo deletar esse hábito?")) {
-        if (true) {
+        if (window.confirm("Você quer mesmo deletar esse hábito?")) {
+            // if (true) {
             axios.delete(BASE_URL + "habits/" + id, config)
                 .then(() => setRefresh(r => !r))
                 .catch(err => console.log(err.response.data.message))
         }
     }
-    if (!habitsList) return <ThreeDots color={LIGHTBLUE} />
+    if (!habitsList) {
+        return <ThreeDots color={LIGHTBLUE} />
+    }
 
 
     return (
         <>
             <TitleConteiner>
                 <h1>Meus hábitos</h1>
-                <ButtonHabit onClick={() => setAddHabit(true)}>+</ButtonHabit>
+                <ButtonHabit data-test="habit-create-btn" onClick={() => setAddHabit(true)}>+</ButtonHabit>
             </TitleConteiner>
             {addHabit &&
 
                 <HabitCard
+                    dataTest="habit-create-container"
                     setHabitText={setHabitText}
                     habitText={habitText}
                     weekDayHandle={weekDayHandle}
@@ -81,8 +84,8 @@ export default function MyHabitsPage() {
                     mode="edit"
                 >
                     <div>
-                        <span onClick={() => setAddHabit(false)}>Cancelar</span>
-                        <Button submitFuntion={saveHabit} buttonText="Salvar" size="small" />
+                        <span data-test="habit-create-cancel-btn" onClick={() => setAddHabit(false)}>Cancelar</span>
+                        <Button submitFuntion={saveHabit} buttonText="Salvar" size="small" dataTest="habit-create-save-btn" />
                     </div>
 
                 </HabitCard>
@@ -90,12 +93,13 @@ export default function MyHabitsPage() {
 
             {habitsList.length > 0 ? habitsList.map((h) => (
                 <HabitCard
+                    data-test="habit-container"
                     key={h.id}
                     habitText={h.name}
                     weekDays={h.days}
                     mode="list"
                 >
-                    <ion-icon onClick={() => deleteHabit(h.id)} name="trash-outline"></ion-icon>
+                    <ion-icon data-test="habit-delete-btn" onClick={() => deleteHabit(h.id)} name="trash-outline"></ion-icon>
                 </HabitCard>
             ))
                 :

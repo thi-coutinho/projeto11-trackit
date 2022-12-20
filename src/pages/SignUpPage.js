@@ -25,33 +25,37 @@ export default function SignUpPage() {
             .catch(err => {
                 toggleLoading()
                 alert(err.response.data.message)
-               
+
             })
     }
 
     return (
-        <FormUser submitFunction={submitFunction} route="/" linkText={linkText}>
+        <FormUser submitFunction={submitFunction}  dataTest="login-link" route="/" linkText={linkText}>
             <input
+                data-test="email-input"
                 type="email"
                 value={bodySignupInfo.email}
                 onChange={(e => setBodySignupInfo({ ...bodySignupInfo, email: e.target.value }))}
                 placeholder="email" required disabled={loading} />
             <input
+                data-test="password-input"
                 type="password"
                 value={bodySignupInfo.password}
                 onChange={(e => setBodySignupInfo({ ...bodySignupInfo, password: e.target.value }))}
                 placeholder="senha" required disabled={loading} />
             <input
+                data-test="user-name-input"
                 type="text"
                 value={bodySignupInfo.name}
                 onChange={(e => setBodySignupInfo({ ...bodySignupInfo, name: e.target.value }))}
                 placeholder="nome" required disabled={loading} />
             <input
+                data-test="user-image-input"
                 type="url"
                 value={bodySignupInfo.image}
                 onChange={(e => setBodySignupInfo({ ...bodySignupInfo, image: e.target.value }))}
                 placeholder="foto" required disabled={loading} />
-            <Button buttonText="Cadastrar" />
+            <Button buttonText="Cadastrar" dataTest="signup-btn"/>
         </FormUser>
     )
 }

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { LIGHTBLUE } from "../constants/colors";
 import { useLoading } from "../context/LoadingProvider";
 
-export default function Button({ buttonText, size, submitFuntion }) {
+export default function Button({ buttonText, size, submitFuntion ,dataTest}) {
     const loading = useLoading()
     function handleClick(e) {
         if (submitFuntion) {
@@ -13,7 +13,7 @@ export default function Button({ buttonText, size, submitFuntion }) {
     }
 
     return (
-        <ButtonStyled onClick={e => handleClick(e)} disabled={loading} size={size} type="submit">{
+        <ButtonStyled data-test={dataTest} onClick={e => handleClick(e)} disabled={loading} size={size} type="submit">{
             loading ? <ThreeDots color="white" /> : buttonText}
         </ButtonStyled>
     )

@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import BaseScreen from "./components/BaseScreen";
 import LoadingProvider from "./context/LoadingProvider";
+import ProgressProvider from "./context/ProgressProvider";
 import TokenProvider from "./context/TokenProvider";
 import HistoryPage from "./pages/HistoryPage";
 import LoginPage from "./pages/LoginPage";
@@ -12,17 +13,19 @@ function App() {
   return (
     <TokenProvider>
       <LoadingProvider>
-        <BrowserRouter>
-          <BaseScreen>
-            <Routes>
-              <Route path="/" element={<LoginPage />} />
-              <Route path="/cadastro" element={<SignUpPage />} />
-              <Route path="/habitos" element={<MyHabitsPage />} />
-              <Route path="/historico" element={<HistoryPage />} />
-              <Route path="/hoje" element={<TodayPage />} />
-            </Routes>
-          </BaseScreen>
-        </BrowserRouter>
+        <ProgressProvider>
+          <BrowserRouter>
+            <BaseScreen>
+              <Routes>
+                <Route path="/" element={<LoginPage />} />
+                <Route path="/cadastro" element={<SignUpPage />} />
+                <Route path="/habitos" element={<MyHabitsPage />} />
+                <Route path="/historico" element={<HistoryPage />} />
+                <Route path="/hoje" element={<TodayPage />} />
+              </Routes>
+            </BaseScreen>
+          </BrowserRouter>
+        </ProgressProvider>
       </LoadingProvider>
     </TokenProvider>
   );

@@ -6,7 +6,7 @@ export default function TopBar(){
     const tokenObj = useToken()
     const url = tokenObj.imageURL
     return (
-        <Top>
+        <Top data-test="header">
             <div> TrackIt</div>
             <img src={url} alt="userImage" />
 

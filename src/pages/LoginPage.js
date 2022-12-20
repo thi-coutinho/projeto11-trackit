@@ -17,36 +17,38 @@ export default function LoginPage() {
 
     function submitFunction() {
         toggleLoading()
-        axios.post(BASE_URL + "auth/login",bodyLoginInfo)
-        .then(res => {
-            setToken({token:res.data.token,imageURL:res.data.image})
-            toggleLoading()
-            navigate("/hoje")
-        })
-        .catch(err => {
-            alert(err.response.data.message)
-            toggleLoading()
-        })
+        axios.post(BASE_URL + "auth/login", bodyLoginInfo)
+            .then(res => {
+                setToken({ token: res.data.token, imageURL: res.data.image })
+                toggleLoading()
+                navigate("/hoje")
+            })
+            .catch(err => {
+                alert(err.response.data.message)
+                toggleLoading()
+            })
     }
     return (
-        <FormUser route="/cadastro" submitFunction={submitFunction} linkText={linkText}>
+        <FormUser route="/cadastro" submitFunction={submitFunction} linkText={linkText} dataTest="signup-link">
             <input
+                data-test="email-input"
                 type="email"
                 placeholder="email"
                 value={bodyLoginInfo.email}
-                onChange={(e)=> setBodyLoginInfo({...bodyLoginInfo,email:e.target.value}) }
+                onChange={(e) => setBodyLoginInfo({ ...bodyLoginInfo, email: e.target.value })}
                 disabled={loading}
                 required
             />
             <input
                 type="password"
+                data-test="password-input" 
                 placeholder="senha"
                 value={bodyLoginInfo.password}
-                onChange={(e)=> setBodyLoginInfo({...bodyLoginInfo,password:e.target.value}) }
+                onChange={(e) => setBodyLoginInfo({ ...bodyLoginInfo, password: e.target.value })}
                 disabled={loading}
                 required
             />
-            <Button buttonText="Entrar" />
+            <Button buttonText="Entrar" dataTest="login-btn" />
         </FormUser>
     )
 }
