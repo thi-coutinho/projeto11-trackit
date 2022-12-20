@@ -1,76 +1,110 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { ThreeDots } from "react-loader-spinner";
 import styled from "styled-components";
-import BaseScreen from "../components/BaseScreen";
-import { LIGHTBLUE, LIGHTERGREY } from "../constants/colors";
+import Button from "../components/Button";
+import HabitCard from "../components/HabitCard";
+import { LIGHTBLUE } from "../constants/colors";
+import { BASE_URL } from "../constants/url";
+import { useToggleLoading } from "../context/LoadingProvider";
+import { useToken } from "../context/TokenProvider";
 
 export default function MyHabitsPage() {
     const [addHabit, setAddHabit] = useState(false)
+    const [habitText, setHabitText] = useState("")
+    const [weekDays, setWeekdays] = useState([])
+    const [habitsList, setHabitsList] = useState(undefined)
+    const [refresh, setRefresh] = useState(true)
+    const token = useToken()
+    const toggleLoading = useToggleLoading()
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${token.token}`
+        }
+    }
+    function refreshHabitList() {
+        axios.get(BASE_URL + "habits", config)
+            .then(res => setHabitsList(res.data))
+            .catch(err => console.log(err.response.data.message))
+    }
+    useEffect(() => refreshHabitList(), [refresh])
+
+    function weekDayHandle(e, i) {
+        e.preventDefault()
+        if (weekDays.includes(i)) {
+            const newWeekdays = weekDays.filter(w => w !== i)
+            setWeekdays(newWeekdays)
+        } else {
+            setWeekdays([...weekDays, i])
+        }
+
+    }
+    function saveHabit() {
+        toggleLoading()
+        const body = { name: habitText, days: weekDays }
+        axios.post(BASE_URL + "habits", body, config)
+            .then(res => {
+                setRefresh(r => !r)
+                setAddHabit(false)
+                toggleLoading()
+                setWeekdays([])
+                setHabitText("")
+            })
+            .catch(err => console.log(err.response.data.message))
+
+    }
+
+    function deleteHabit(id) {
+        // if (window.confirm("Você quer mesmo deletar esse hábito?")) {
+        if (true) {
+            axios.delete(BASE_URL + "habits/" + id, config)
+                .then(() => setRefresh(r => !r))
+                .catch(err => console.log(err.response.data.message))
+        }
+    }
+    if (!habitsList) return <ThreeDots color={LIGHTBLUE} />
+
+
     return (
-        <BaseScreen>
+        <>
             <TitleConteiner>
                 <h1>Meus hábitos</h1>
                 <ButtonHabit onClick={() => setAddHabit(true)}>+</ButtonHabit>
             </TitleConteiner>
             {addHabit &&
-                
-            <AddHabitCard>
-                <input type="text" placeholder="nome do habito" />
-                <br />
-                <>{["D", "S", "T", "Q", "Q", "S", "S"].map((d, i) => (
-                    <button key={i}>{d}</button>
-                ))}</>
-                <div>
-                    <span onClick={() => setAddHabit(false)}>Cancelar</span>
-                    <ButtonSave>Salvar</ButtonSave>
-                </div>
 
-            </AddHabitCard>
+                <HabitCard
+                    setHabitText={setHabitText}
+                    habitText={habitText}
+                    weekDayHandle={weekDayHandle}
+                    weekDays={weekDays}
+                    mode="edit"
+                >
+                    <div>
+                        <span onClick={() => setAddHabit(false)}>Cancelar</span>
+                        <Button submitFuntion={saveHabit} buttonText="Salvar" size="small" />
+                    </div>
+
+                </HabitCard>
             }
 
-            <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
-        </BaseScreen>
+            {habitsList.length > 0 ? habitsList.map((h) => (
+                <HabitCard
+                    key={h.id}
+                    habitText={h.name}
+                    weekDays={h.days}
+                    mode="list"
+                >
+                    <ion-icon onClick={() => deleteHabit(h.id)} name="trash-outline"></ion-icon>
+                </HabitCard>
+            ))
+                :
+                <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>}
+        </>
     )
 }
 
-const AddHabitCard = styled.form`
-    width:calc(100vw - 34px);
-    margin: 0 17px;
-    padding:18px;
-    min-height: 180px;
-    background-color:white;
-    border-radius: 5px;
-    input[type=text]{
-        width:100%;
-        height:45px;
-        border:1px solid ${LIGHTERGREY};
-        border-radius:5px;
-        padding-left:11px;
-        &::placeholder{
-            font-size:20px;
-            color:${LIGHTERGREY};
-        }
-    }
-    div {
-        color:${LIGHTBLUE};
-        margin-top:32px;
-        display:flex;
-        justify-content:flex-end;
-        align-items:center;
-        gap: 23px;
-    }
-    > button{
-        font-size:20px;
-        width:30px;
-        height:30px;
-        color: ${LIGHTERGREY};
-        background:white;
-        border:1px solid ${LIGHTERGREY};
-        border-radius:5px;
-        margin: 8px 4px 0px 0;
-    }
 
-
-`
 const TitleConteiner = styled.div`
     
     display:flex;
@@ -87,7 +121,4 @@ const ButtonHabit = styled.button`
     height:35px;
     padding: 0 12px;
 
-`
-const ButtonSave = styled(ButtonHabit)`
-    font-size:16px;
 `

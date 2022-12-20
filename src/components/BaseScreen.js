@@ -1,20 +1,22 @@
 import NavBar from "./NavBar";
 import TopBar from "./TopBar";
 import styled from "styled-components";
+import { useToken } from "../context/TokenProvider";
 
-export default function BaseScreen(props){
+export default function BaseScreen({children}){
+    const token = useToken()
     return (
-        <Screen>
-            <TopBar/>
-            {props.children}
-            <NavBar/>
+        <Screen token={token}>
+            {token && <TopBar/>}
+            {children}
+            {token && <NavBar/>}
         </Screen>
 
     )
 }
 
 const Screen = styled.div`
-    height:100vh;
-    padding:70px 0;
-    background-color: #F2F2F2;
+    min-height:100vh;
+    padding:70px 0 100px;
+    background-color: ${props => props.token? "#F2F2F2":"white" } ;
 `

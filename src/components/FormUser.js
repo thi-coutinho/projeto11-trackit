@@ -26,7 +26,6 @@ const FlexRow = styled.div`
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    margin: 68px 0;
     img {
         max-width:200px;
         margin-bottom:32px;
@@ -37,6 +36,8 @@ const FlexRow = styled.div`
 `
 const FormLogin = styled.form`
     display:flex;
+    font-size:20px;
+    width:calc(100vw - 2 * 36px);
     flex-direction:column;
     justify-content:center;
     align-items:center;
@@ -44,8 +45,8 @@ const FormLogin = styled.form`
     input {
         border: 1px solid #D5D5D5;
         border-radius: 5px;
-        font-size:20px;
-        width:calc(100vw - 2 * 36px);
+        font-size:inherit;
+        width:inherit;
         height:45px;
         padding-left:11px;
         margin:3px 36px;

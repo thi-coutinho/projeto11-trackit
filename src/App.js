@@ -1,8 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-// import TopBar from "./components/TopBar";
-// import NavBar from "./components/NavBar";
+import BaseScreen from "./components/BaseScreen";
 import LoadingProvider from "./context/LoadingProvider";
-import TokenProvider, { useToken } from "./context/TokenProvider";
+import TokenProvider from "./context/TokenProvider";
 import HistoryPage from "./pages/HistoryPage";
 import LoginPage from "./pages/LoginPage";
 import MyHabitsPage from "./pages/MyHabitsPage";
@@ -14,15 +13,15 @@ function App() {
     <TokenProvider>
       <LoadingProvider>
         <BrowserRouter>
-        {/* {useToken() && <TopBar/>} */}
-          <Routes>
-            <Route path="/" element={<LoginPage />} />
-            <Route path="/cadastro" element={<SignUpPage />} />
-            <Route path="/habitos" element={<MyHabitsPage />} />
-            <Route path="/historico" element={<HistoryPage />} />
-            <Route path="/hoje" element={<TodayPage />} />
-          </Routes>
-          {/* {useToken() && <NavBar/>} */}
+          <BaseScreen>
+            <Routes>
+              <Route path="/" element={<LoginPage />} />
+              <Route path="/cadastro" element={<SignUpPage />} />
+              <Route path="/habitos" element={<MyHabitsPage />} />
+              <Route path="/historico" element={<HistoryPage />} />
+              <Route path="/hoje" element={<TodayPage />} />
+            </Routes>
+          </BaseScreen>
         </BrowserRouter>
       </LoadingProvider>
     </TokenProvider>

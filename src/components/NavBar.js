@@ -14,6 +14,7 @@ export default function NavBar(){
 }
 
 const Menu = styled.div`
+    z-index:2;
     position:fixed;
     bottom:0;
     background:white;

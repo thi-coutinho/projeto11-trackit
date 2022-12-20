@@ -16,6 +16,7 @@ export default function TopBar(){
 }
 
 const Top = styled.div`
+    z-index:2;
     position:fixed;
     top:0;
     background:${DARKBLUE};
