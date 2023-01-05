@@ -2,32 +2,33 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 import { LIGHTBLUE } from "../constants/colors"
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css"
 import { useProgress } from "../context/ProgressProvider";
 
 export default function NavBar() {
     const progress = useProgress()
 
     return (
-        <Menu  data-test="menu">
+        <Menu data-test="menu">
             <div>
                 <Link data-test="habit-link" to={"/habitos"}><div> Hábitos</div></Link>
             </div>
+            <div>
+                <Link data-test="today-link" to={"/hoje"}>
+                    <CircularProgressbar
+                        value={progress ? Math.floor(100 * progress.doneHabitsToday / progress.totalHabitsToday) : 0}
+                        strokeWidth={10}
+                        text="Hoje"
+                        minValue={0}
+                        styles={buildStyles({
+                            textColor: "white",
+                            pathColor: "white",
+                            trailColor: LIGHTBLUE,
+                        })}
+                    />
+                </Link>
 
-            <Link data-test="today-link" to={"/hoje"}>
-                <CircularProgressbar
-                    value={progress ? Math.floor(100 * progress.doneHabitsToday / progress.totalHabitsToday) : 0}
-                    strokeWidth={10}
-                    text="Hoje"
-                    minValue={0}
-                    styles={buildStyles({
-                        textColor: "white",
-                        pathColor: "white",
-                        trailColor: LIGHTBLUE,
-                        textSize: "19px",
-                    })}
-                />
-            </Link>
-
+            </div>
             <div>
                 <Link data-test="history-link" to={"/historico"}><div> Histórico</div></Link>
             </div>
@@ -43,17 +44,16 @@ const Menu = styled.div`
     background:white;
     display:flex;
     width:100vw;
-    padding:0 18px;
+    /* padding:0 18px; */
     height:70px;
     font-size:18px;
     color:${LIGHTBLUE};
-    /* justify-content:space-between; */
-    gap:20px;
+    justify-content:space-around;
+    gap:1rem;
     align-items:center;
     & :nth-child(2) {
         position:relative;
         top:-25px;
-        font:inherit;
         height:91px;
         width:91px;
         padding:5px;
